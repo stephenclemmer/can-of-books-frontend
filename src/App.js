@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Navbar, Container, Row, Col } from 'react-bootstrap';
 import Form from './components/AddItem.js';
 import Items from './components/Items.js';
-import Accordion from 'react-bootstrap/Accordion'
+// import Accordion from 'react-bootstrap/Accordion'
 
 const API_SERVER = process.env.REACT_APP_API;
 
@@ -17,17 +17,38 @@ class App extends React.Component {
       items: []
     }
   }
+ 
+  // _______________________________
+  // deleteItem = 
 
+
+
+  // ________________________________
   addItem = async (item) => {
-    await post(`${API_SERVER}/items`, item);
-    this.getItems();
+    try{
+      const response = await axios.post(`${API_SERVER}/items`, item);
+      const newItem = response.data;
+      this.getItems();
+        this.setState({
+          items: [...this.state.items, newItem],
+        });
+      } catch (error) {
+      console.log('error in book post: ', error.response);
+    }
   }
 
   getItems = async () => {
-    const response = await axios.get(`${API_SERVER}/items`);
-    const items = response.data;
-    this.setState({ items });
+    try {
+      const response = await axios.get(`${API_SERVER}/items`);
+      const items = response.data;
+      this.setState({ 
+      items: items
+    });
+   } catch (error) {
+    console.log('we have an error: ', error.response);
+   }  
   }
+
 
   async componentDidMount() {
     await this.getItems();
