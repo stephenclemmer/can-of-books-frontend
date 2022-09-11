@@ -1,11 +1,8 @@
 import React from 'react';
-
 import axios from 'axios';
-
 import { Navbar, Container, Row, Col } from 'react-bootstrap';
-import Form from './components/AddItem.js';
 import Items from './components/Items.js';
-// import Accordion from 'react-bootstrap/Accordion'
+import AddNewItem from './components/AddItem.js';
 
 const API_SERVER = process.env.REACT_APP_API;
 
@@ -18,12 +15,25 @@ class App extends React.Component {
     }
   }
  
-  // _______________________________
-  // deleteItem = 
+
+  handleDelete = async (itemToDelete) => {
+    try {
+      const response = await axios.delete(`${API_SERVER}/items/${itemToDelete._id}`);
+      console.log(response.status);
+      const filteredItems = this.state.items.filter( item => {
+        return item._id !== itemToDelete._id;
+      })
+      this.setState({
+        item: filteredItems
+      })
+      this.getItems();
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
-
-  // ________________________________
   addItem = async (item) => {
     try{
       const response = await axios.post(`${API_SERVER}/items`, item);
@@ -60,16 +70,24 @@ class App extends React.Component {
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand href="#home">301 Final!</Navbar.Brand>
         </Navbar>
+        <Container>
+          <AddNewItem 
+            addItem={this.addItem}
+          />
+        </Container>
+
         <Container fluid>
           <Row>
             <Col><h1>Our Items</h1></Col>
           </Row>
           <Row>
             <Col md="auto">
-              <Form handleAddItem={this.addItem} />
             </Col>
             <Col>
-              <Items itemsList={this.state.items} />
+              <Items 
+              itemsList={this.state.items} 
+              handleDelete={this.handleDelete}
+              />
             </Col>
           </Row>
         </Container>

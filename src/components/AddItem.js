@@ -21,19 +21,18 @@ class AddNewItem extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.handleAddItem(this.state.formData)
+    this.props.addItem(this.state.formData)
   }
 
   render() {
-
     return (
       <Form data-testid="add-form" onSubmit={this.handleSubmit}>
         <Card style={{ width: '18rem' }}>
-          <Card.Header>Add Item</Card.Header>
+          <Card.Header></Card.Header>
           <Card.Body>
             <Form.Group>
               <Form.Label>Item</Form.Label>
-              <Form.Control type="text" placeholder="To Do Item" data-testid="add-form-name" name="name" onChange={this.handleChange} />
+              <Form.Control type="text" placeholder="New Item" data-testid="add-form-name" name="name" onChange={this.handleChange} />
             </Form.Group>
             <Form.Group>
               <Form.Label>Description</Form.Label>
