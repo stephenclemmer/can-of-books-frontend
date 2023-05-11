@@ -15,7 +15,6 @@ class App extends React.Component {
     }
   }
  
-
   handleDelete = async (itemToDelete) => {
     try {
       const response = await axios.delete(`${API_SERVER}/items/${itemToDelete._id}`);
@@ -33,7 +32,6 @@ class App extends React.Component {
     }
   }
 
-
   addItem = async (item) => {
     try{
       const response = await axios.post(`${API_SERVER}/items`, item);
@@ -46,6 +44,7 @@ class App extends React.Component {
       console.log('error in book post: ', error.response);
     }
   }
+
 
   getItems = async () => {
     try {

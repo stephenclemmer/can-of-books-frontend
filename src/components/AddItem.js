@@ -19,6 +19,7 @@ class AddNewItem extends React.Component {
     this.setState({ formData });
   }
 
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.addItem(this.state.formData)
